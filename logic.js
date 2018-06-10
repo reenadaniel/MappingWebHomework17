@@ -1,7 +1,7 @@
 // Store our API endpoint inside queryUrl
 var earthquakeURL = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
 
-var faultLinesURL = "https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_boundaries.json";
+var faultLinesURL = "PB2002_boundaries.json";
 
 // Perform a GET request to the query URL
 d3.json(earthquakeURL, function(data) {
@@ -13,8 +13,10 @@ function createFeatures(earthquakeData) {
 
   // Define a function we want to run once for each feature in the features array
   // Give each feature a popup describing the magnitude, place and time of the earthquake
+
   // Create a GeoJSON layer containing the features array on the earthquakeData object
   // Run the onEachFeature function once for each piece of data in the array
+ 
   var earthquakes = L.geoJSON(earthquakeData, {
     onEachFeature: function(feature, layer) {
       layer.bindPopup("<h3>Magnitude: " + feature.properties.mag +"</h3><h3>Location: "+ feature.properties.place +
@@ -33,11 +35,9 @@ function createFeatures(earthquakeData) {
   }
   });
 
-  
   // Sending our earthquakes layer to the createMap function
   createMap(earthquakes);
 }
-
 
 function createMap(earthquakes) {
 
@@ -87,7 +87,6 @@ function createMap(earthquakes) {
       .addTo(faultLines);
   });
 
-  
     // Add the layer control to the map
     L.control.layers(baseMaps, overlayMaps, {
       collapsed: false
@@ -113,7 +112,6 @@ function createMap(earthquakes) {
   legend.addTo(myMap);
 }
    
-
   //Create color range for the circle diameter 
   function getColor(d){
     return d > 5 ? "#a54500":
